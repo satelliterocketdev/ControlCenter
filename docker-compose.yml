@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+   app:
+     build:
+       context: .
+       dockerfile: Dockerfile
+       target: prod
+     restart: always
+     image: i69social
+     container_name: i69social
+     #volumes:
+       #- "./firebase.json:/app/src/api/config/firebase.json"
+     env_file:
+       - .env
+     ports:
+       - "3000:80"
+     depends_on:
+       - db
+       - cache
+
+   db:
+     image: "mysql:5.7.21"
+     container_name: i69social-mysql
+     restart: always
+     env_file:
+     - .env
+     volumes:
+     - ./.docker/mysql/:/docker-entrypoint-initdb.d/
+     - ./data/mysql:/var/lib/mysql
+     ports:
+     - "3310:3306"
+
+   cache:
+     image: "redis:5.0.5"
+     container_name: i69social-redis
+     restart: always
+     env_file:
+     - .env
+     volumes:
+     - ./data/redis:/data

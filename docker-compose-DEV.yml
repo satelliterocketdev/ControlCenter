@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+   app:
+     build:
+       context: .
+       dockerfile: Dockerfile
+       target: dev
+     restart: always
+     image: i69social_dev
+     container_name: i69social
+     volumes:
+       - "./src/:/app/src"
+       - "./bin/:/app/bin"
+       - "./migrations:/app/migrations"
+       - "./Makefile:/app/Makefile"
+     env_file:
+       - .env
+     ports:
+       - "3003:80"
+
