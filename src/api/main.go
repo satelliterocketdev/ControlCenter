@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-
+	tt = "test";
 	cfg := config.GetConfig()
 	_, err := database.InitMySQLDB(cfg.DSN)
 	if err != nil {
